@@ -36,5 +36,11 @@
 				}
 			]
 		}
+	},
+	"storage": {
+		"turretBolos": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }
