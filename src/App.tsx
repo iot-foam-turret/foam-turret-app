@@ -1,6 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react'; // or 'aws-amplify-react-native';
+
+Amplify.configure(awsconfig);
 
 const App: React.FC = () => {
   return (
@@ -22,5 +27,5 @@ const App: React.FC = () => {
     </div>
   );
 }
-
-export default App;
+// TODO: Remove "true" when logout is implemented
+export default withAuthenticator(App, true);

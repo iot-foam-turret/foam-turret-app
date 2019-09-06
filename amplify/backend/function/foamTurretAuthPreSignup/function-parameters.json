@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "email-filter-whitelist"
+    ],
+    "parentResource": "foamTurretAuth",
+    "functionName": "foamTurretAuthPreSignup",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PreSignup.json.ejs",
+    "roleName": "foamTurretAuthPreSignup",
+    "skipEdit": true,
+    "resourceName": "foamTurretAuthPreSignup"
+}
