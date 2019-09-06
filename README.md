@@ -1,5 +1,12 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## BEFORE YOU START
+If you intend to do development, you will need to grab some of the aws tools which requires a bit of configuration.
+
+you can run ```./hackathon.sh``` 
+
+if it doesn't work, that's too bad. Go ahead and ```cat hackathon.sh``` which has comments detailing step by step what you should be doing to set up and properly configure the account.
+
 ## Available Scripts
 
 In the project directory, you can run:
