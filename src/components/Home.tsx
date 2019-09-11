@@ -1,11 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { PubSub } from "aws-amplify";
+import TurretController from "./TurretController";
+import styled from "styled-components";
+
+const Fullscreen = styled.div`
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: white;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  right: 15px;
+`;
 
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";
 
 type iotTurretState = {
-  pitch: Number;
-  yaw: Number;
+  pitch: number;
+  yaw: number;
 };
 
 function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
@@ -20,8 +40,12 @@ function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
 
     const sub = PubSub.subscribe(piTurretUpdateTopic).subscribe({
       next: (data: any) => {
-        console.log("Message received", data);
-        if (data && data.value && data.value.state && data.value.state.reported) {
+        if (
+          data &&
+          data.value &&
+          data.value.state &&
+          data.value.state.reported
+        ) {
           setTurretState(data.value.state.reported);
         }
       },
@@ -31,7 +55,7 @@ function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
     return () => sub.unsubscribe();
   }, []);
 
-  async function setDesiredState(newState: iotTurretState) {
+  async function publishDesiredState(newState: iotTurretState) {
     await PubSub.publish(piTurretUpdateTopic, {
       state: {
         desired: newState
@@ -39,18 +63,43 @@ function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
     });
   }
 
-  return [turretState, setDesiredState];
+  return [turretState, publishDesiredState];
 }
 export default function Home() {
   const [turretState, setTurretState] = useIoT();
+  const [fullscreen, setFullscreen] = useState(false);
+  const toggleFullscreen = () => {
+    setFullscreen(!fullscreen);
+  };
+  // const moveTurret = ({ x, y }: { x: number; y: number }) => {
+  //   console.log(x, y);
+  //   setTurretState({
+  //     pitch: y,
+  //     yaw: x
+  //   });
+  // };
+  const updatePosition = ({ x, y }: { x: number; y: number }) => {
+    const newState = {
+      pitch: y,
+      yaw: x
+    };
+    setTurretState(newState);
+  };
   return (
     <>
       <h2>Home Page</h2>
       <div>
-        <button onClick={() => setTurretState({ pitch: 10, yaw: 10 })}>
-          Test
-        </button>
-        <div>{JSON.stringify(turretState)}</div>
+        <p>
+          Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
+          <button onClick={toggleFullscreen}>Remote</button>
+        </p>
+        {/* <TurretGridController moveTurret={moveTurret} /> */}
+        {fullscreen && (
+          <Fullscreen>
+            <CloseButton onClick={toggleFullscreen}>x</CloseButton>
+            <TurretController updatePosition={updatePosition} />
+          </Fullscreen>
+        )}
       </div>
     </>
   );
