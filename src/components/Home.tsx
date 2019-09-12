@@ -18,7 +18,26 @@ const Fullscreen = styled.div`
 
 const CloseButton = styled.button`
   position: absolute;
-  right: 15px;
+  right: 25px;
+  top: 25px;
+  color: white;
+  font-size: 20px;
+  background: black;
+  border: 2px solid white;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+`;
+
+const DebugTurretInfo = styled.div`
+  position: fixed;
+  bottom: 0;
+  z-index: 2;
+  color: cyan;
+  width: 100%;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";
@@ -90,13 +109,15 @@ export default function Home() {
       <h2>Home Page</h2>
       <div>
         <p>
-          Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
           <button onClick={toggleFullscreen}>Remote</button>
         </p>
         {/* <TurretGridController moveTurret={moveTurret} /> */}
         {fullscreen && (
           <Fullscreen>
             <CloseButton onClick={toggleFullscreen}>x</CloseButton>
+            <DebugTurretInfo>
+              Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
+            </DebugTurretInfo>
             <TurretController updatePosition={updatePosition} />
           </Fullscreen>
         )}

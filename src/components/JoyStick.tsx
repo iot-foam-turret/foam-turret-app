@@ -3,6 +3,7 @@ import nipplejs, { JoystickOutputData, JoystickManagerOptions } from "nipplejs";
 
 const staticOptions: JoystickManagerOptions = {
   mode: "dynamic",
+  position: { top: "50%", left: "50%" },
   catchDistance: 150,
   color: "cyan",
   threshold: 0.2
@@ -32,7 +33,7 @@ export default function JoyStick({
       ref={joyStick}
       style={{
         width: "100%",
-        height: "50vh",
+        height: "100%",
         position: "relative"
       }}
     />

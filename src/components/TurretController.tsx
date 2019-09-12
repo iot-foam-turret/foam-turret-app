@@ -3,6 +3,7 @@ import { JoystickOutputData } from "nipplejs";
 import styled from "styled-components";
 import JoyStick from "./JoyStick";
 import ControllerButton from "./ControllerButton";
+import * as Breakpoints from "../styles/breakpoints";
 
 function minMax(input: number, bound: number) {
   if (input > bound) return bound;
@@ -13,14 +14,24 @@ function minMax(input: number, bound: number) {
 const Controller = styled.div`
   display: flex;
   margin: auto;
-  border: 2px solid black;
-  border-radius: 20px;
   overflow: hidden;
   background-color: #4a4a4a;
-  height: 90%;
-  width: 90%;
-  max-width: 800px;
-  max-height: 300px;
+  height: 100%;
+  width: 100%;
+
+  @media (min-height: ${Breakpoints.medium}px),
+    (min-width: ${Breakpoints.large}px) {
+    height: 90%;
+    width: 90%;
+    max-width: 800px;
+    max-height: 200px;
+    border: 2px solid black;
+    border-radius: 20px;
+  }
+
+  @media (min-width: ${Breakpoints.large}px) {
+    max-height: 300px;
+  }
 `;
 
 const ButtonGroup = styled.div`
