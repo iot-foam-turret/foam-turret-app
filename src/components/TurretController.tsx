@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import { JoystickOutputData } from "nipplejs";
 import styled from "styled-components";
 import JoyStick from "./JoyStick";
@@ -56,7 +56,7 @@ export default function TurretController({
   const joyStickRef = useRef({ x: 0, y: 0 });
   const desiredRef = useRef({ x: 0, y: 0 });
   const joyStickInterval = useRef<number | undefined>(undefined);
-  const moveHandler = (data: JoystickOutputData) => {
+  const moveHandler = useCallback((data: JoystickOutputData) => {
     // x = cos(degrees) * distance
     // y = sin(degrees) * distance
     if (data.angle && data.angle.radian && data.distance) {
@@ -83,7 +83,7 @@ export default function TurretController({
         updatePosition(newState);
       }, 200);
     }
-  };
+  }, [updatePosition]);
   return (
     <Controller>
       <JoystickContainer>
