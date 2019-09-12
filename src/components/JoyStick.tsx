@@ -9,7 +9,7 @@ const staticOptions: JoystickManagerOptions = {
   threshold: 0.2
 };
 
-export default function JoyStick({
+export default React.memo(function JoyStick({
   onMove
 }: {
   onMove: (data: JoystickOutputData) => void;
@@ -38,4 +38,4 @@ export default function JoyStick({
       }}
     />
   );
-}
+});

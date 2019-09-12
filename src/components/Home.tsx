@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { PubSub } from "aws-amplify";
 import TurretController from "./TurretController";
 import styled from "styled-components";
@@ -74,13 +74,13 @@ function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
     return () => sub.unsubscribe();
   }, []);
 
-  async function publishDesiredState(newState: iotTurretState) {
+  const publishDesiredState = useCallback(async (newState: iotTurretState) => {
     await PubSub.publish(piTurretUpdateTopic, {
       state: {
         desired: newState
       }
     });
-  }
+  }, []);
 
   return [turretState, publishDesiredState];
 }
@@ -97,13 +97,13 @@ export default function Home() {
   //     yaw: x
   //   });
   // };
-  const updatePosition = ({ x, y }: { x: number; y: number }) => {
+  const updatePosition = useCallback(({ x, y }: { x: number; y: number }) => {
     const newState = {
       pitch: y,
       yaw: x
     };
     setTurretState(newState);
-  };
+  }, [setTurretState]);
   return (
     <>
       <h2>Home Page</h2>
