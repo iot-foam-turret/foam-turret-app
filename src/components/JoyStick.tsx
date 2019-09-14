@@ -27,6 +27,9 @@ export default React.memo(function JoyStick({
     manager.on("end", (_event, data) => {
       onMove(data);
     });
+    return () => {
+        manager.destroy()
+    }
   }, [onMove]);
   return (
     <div

@@ -27,6 +27,7 @@ const CloseButton = styled.button`
   border-radius: 20px;
   width: 40px;
   height: 40px;
+  padding: 0;
   z-index: 1;
 `;
 
