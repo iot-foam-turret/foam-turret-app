@@ -48,11 +48,15 @@ const JoystickContainer = styled.div`
   z-index: 1;
 `;
 
-export default function TurretController({
-  updatePosition
-}: {
+type TurretControllerProps = {
   updatePosition: (position: { x: number; y: number }) => void;
-}) {
+  fire: () => void;
+};
+
+const TurretController: React.FC<TurretControllerProps> = ({
+  updatePosition,
+  fire
+}) => {
   const joyStickRef = useRef({ x: 0, y: 0 });
   const desiredRef = useRef({ x: 0, y: 0 });
   const joyStickInterval = useRef<number | undefined>(undefined);
@@ -99,8 +103,10 @@ export default function TurretController({
       </JoystickContainer>
       <ButtonGroup>
         <ControllerButton onClick={resetTurret}>B</ControllerButton>
-        <ControllerButton onClick={() => {}}>A</ControllerButton>
+        <ControllerButton onClick={fire}>A</ControllerButton>
       </ButtonGroup>
     </Controller>
   );
-}
+};
+
+export default TurretController;

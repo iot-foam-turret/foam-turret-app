@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import styled from "styled-components";
 import * as Breakpoints from "../styles/breakpoints";
 
@@ -30,12 +30,10 @@ const Button = styled.button`
   }
 `;
 
-export default function ControllerButton({
-  children,
-  onClick
-}: {
-  children: ReactNode;
+const ControllerButton: React.FC<{
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}) {
+}> = ({ children, onClick }) => {
   return <Button onClick={onClick}>{children}</Button>;
-}
+};
+
+export default ControllerButton;

@@ -44,8 +44,9 @@ const DebugTurretInfo = styled.div`
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";
 
 type iotTurretState = {
-  pitch: number;
-  yaw: number;
+  pitch?: number;
+  yaw?: number;
+  mode?: "Firing";
 };
 
 function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
@@ -98,13 +99,21 @@ export default function Home() {
   //     yaw: x
   //   });
   // };
-  const updatePosition = useCallback(({ x, y }: { x: number; y: number }) => {
-    const newState = {
-      pitch: y,
-      yaw: x
-    };
-    setTurretState(newState);
-  }, [setTurretState]);
+  const updatePosition = useCallback(
+    ({ x, y }: { x: number; y: number }) => {
+      const newState = {
+        pitch: y,
+        yaw: x
+      };
+      setTurretState(newState);
+    },
+    [setTurretState]
+  );
+
+  const fire = useCallback(() => setTurretState({ mode: "Firing" }), [
+    setTurretState
+  ]);
+
   return (
     <>
       <h2>Home Page</h2>
@@ -119,7 +128,7 @@ export default function Home() {
             <DebugTurretInfo>
               Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
             </DebugTurretInfo>
-            <TurretController updatePosition={updatePosition} />
+            <TurretController updatePosition={updatePosition} fire={fire} />
           </Fullscreen>
         )}
       </div>
