@@ -48,51 +48,65 @@ const JoystickContainer = styled.div`
   z-index: 1;
 `;
 
-export default function TurretController({
-  updatePosition
-}: {
+type TurretControllerProps = {
   updatePosition: (position: { x: number; y: number }) => void;
-}) {
+  fire: () => void;
+};
+
+const TurretController: React.FC<TurretControllerProps> = ({
+  updatePosition,
+  fire
+}) => {
   const joyStickRef = useRef({ x: 0, y: 0 });
   const desiredRef = useRef({ x: 0, y: 0 });
   const joyStickInterval = useRef<number | undefined>(undefined);
-  const moveHandler = useCallback((data: JoystickOutputData) => {
-    // x = cos(degrees) * distance
-    // y = sin(degrees) * distance
-    if (data.angle && data.angle.radian && data.distance) {
-      const x = Math.cos(data.angle.radian) * data.distance;
-      const y = Math.sin(data.angle.radian) * data.distance;
-      joyStickRef.current = { x, y };
-    } else {
-      joyStickRef.current = { x: 0, y: 0 };
-    }
-    if (!joyStickInterval.current) {
-      joyStickInterval.current = window.setInterval(() => {
-        const { x, y } = joyStickRef.current;
-        const desired = desiredRef.current;
-        if (!x && !y) {
-          window.clearInterval(joyStickInterval.current);
-          joyStickInterval.current = undefined;
-          return;
-        }
-        const newState = {
-          x: minMax(desired.x + x / 10, 90),
-          y: minMax(desired.y + y / 10, 25)
-        };
-        desiredRef.current = newState;
-        updatePosition(newState);
-      }, 200);
-    }
-  }, [updatePosition]);
+  const moveHandler = useCallback(
+    (data: JoystickOutputData) => {
+      // x = cos(degrees) * distance
+      // y = sin(degrees) * distance
+      if (data.angle && data.angle.radian && data.distance) {
+        const x = Math.cos(data.angle.radian) * data.distance;
+        const y = Math.sin(data.angle.radian) * data.distance;
+        joyStickRef.current = { x, y };
+      } else {
+        joyStickRef.current = { x: 0, y: 0 };
+      }
+      if (!joyStickInterval.current) {
+        joyStickInterval.current = window.setInterval(() => {
+          const { x, y } = joyStickRef.current;
+          const desired = desiredRef.current;
+          if (!x && !y) {
+            window.clearInterval(joyStickInterval.current);
+            joyStickInterval.current = undefined;
+            return;
+          }
+          const newState = {
+            x: minMax(desired.x + x / 10, 90),
+            y: minMax(desired.y + y / 10, 27)
+          };
+          desiredRef.current = newState;
+          updatePosition(newState);
+        }, 100);
+      }
+    },
+    [updatePosition]
+  );
+  const resetTurret = () => {
+    const resetValue = { x: 0, y: 0 };
+    desiredRef.current = resetValue;
+    updatePosition(resetValue);
+  };
   return (
     <Controller>
       <JoystickContainer>
         <JoyStick onMove={moveHandler} />
       </JoystickContainer>
       <ButtonGroup>
-        <ControllerButton onClick={() => {}}>B</ControllerButton>
-        <ControllerButton onClick={() => {}}>A</ControllerButton>
+        <ControllerButton onClick={resetTurret}>B</ControllerButton>
+        <ControllerButton onClick={fire}>A</ControllerButton>
       </ButtonGroup>
     </Controller>
   );
-}
+};
+
+export default TurretController;

@@ -9,11 +9,11 @@ const staticOptions: JoystickManagerOptions = {
   threshold: 0.2
 };
 
-export default React.memo(function JoyStick({
-  onMove
-}: {
+type JoyStickProps = {
   onMove: (data: JoystickOutputData) => void;
-}) {
+};
+
+const JoyStick: React.FC<JoyStickProps> = ({ onMove }) => {
   const joyStick = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!joyStick.current) return;
@@ -27,6 +27,9 @@ export default React.memo(function JoyStick({
     manager.on("end", (_event, data) => {
       onMove(data);
     });
+    return () => {
+      manager.destroy();
+    };
   }, [onMove]);
   return (
     <div
@@ -38,4 +41,6 @@ export default React.memo(function JoyStick({
       }}
     />
   );
-});
+};
+
+export default React.memo(JoyStick);
