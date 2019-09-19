@@ -1,29 +1,39 @@
-import React from "react";
-import Amplify, { Storage } from 'aws-amplify';
+import React, { useState } from "react";
+import { S3Image } from "aws-amplify-react";
+import styled from "styled-components";
 
-class Upload extends React.Component { 
-    onChange(e: any) {
-        const file = e.target.files[0];
-        Storage.put('example.png', file, {
-            contentType: 'image/png'
-        })
-        .then (result => console.log(result))
-        .catch(err => console.log(err));
+const imageTheme = {
+  photoImg: {
+    width: "80vw"
+  },
+  photo: {
+    width: "80vw",
+    margin: "auto"
+  }
+};
+
+const ShowPicker = styled.button``;
+
+function Upload() {
+  const [pickingImage, setPickingImage] = useState(false);
+  const onLoad = () => {
+    if (pickingImage) {
+      setPickingImage(false);
     }
-  
-    render() {
-        return (
-            <input
-                type="file" accept='image/png'
-                onChange={(e) => this.onChange(e)}
-            />
-        )
-    }
+  };
+  return (
+    <>
+      <ShowPicker onClick={() => setPickingImage(!pickingImage)}>
+        Change Target
+      </ShowPicker>
+      <S3Image
+        imgKey="bolo"
+        picker={pickingImage}
+        theme={imageTheme}
+        onLoad={onLoad}
+      />
+    </>
+  );
 }
-export default Upload;
-// }
-// export default function Upload() {
-//     Storage.put()
 
-//   return <div>Upload Picture</div>;
-// }
+export default Upload;

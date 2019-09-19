@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { PubSub } from "aws-amplify";
 import TurretController from "./TurretController";
 import styled from "styled-components";
+import Upload from "./Upload";
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -111,6 +112,7 @@ export default function Home() {
         <p>
           <button onClick={toggleFullscreen}>Remote</button>
         </p>
+        <Upload />
         {/* <TurretGridController moveTurret={moveTurret} /> */}
         {fullscreen && (
           <Fullscreen>
