@@ -3,7 +3,7 @@ import { PubSub } from "aws-amplify";
 import TurretController from "./TurretController";
 import styled from "styled-components";
 import Upload from "./Upload";
-import { StyledButton } from "./Button";
+import { StyledOutlinedButton } from "./Button";
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -45,13 +45,26 @@ const DebugTurretInfo = styled.div`
 
 const PageContainer = styled.div`
   background: #F3F3F3;
+  padding: 0 20px;
 `;
 
 const PageContents = styled.div`
   background: #FFF;
-  width: 800px;
+  max-width: 800px;
+  margin: 10px;
   margin: auto;
   padding: 50px;
+  position: relative;
+`;
+
+const PageTitle = styled.h2`
+  padding-bottom: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: 55px;
+  right: 50px;
 `;
 
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";
@@ -131,11 +144,11 @@ export default function Home() {
     <>
       <PageContainer>
         <PageContents>
-          <h2>Home Page</h2>
+          <PageTitle>Home Page</PageTitle>
+          <ButtonContainer>
+            <StyledOutlinedButton className="outlined" onClick={toggleFullscreen}>REMOTE</StyledOutlinedButton>
+          </ButtonContainer>
           <div>
-            <p>
-              <StyledButton onClick={toggleFullscreen}>Remote</StyledButton>
-            </p>
             <Upload />
             {/* <TurretGridController moveTurret={moveTurret} /> */}
             {fullscreen && (
