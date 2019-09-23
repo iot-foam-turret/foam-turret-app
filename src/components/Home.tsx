@@ -3,6 +3,7 @@ import { PubSub } from "aws-amplify";
 import TurretController from "./TurretController";
 import styled from "styled-components";
 import Upload from "./Upload";
+import { StyledOutlinedButton } from "./Button";
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -40,6 +41,30 @@ const DebugTurretInfo = styled.div`
   width: 100%;
   text-align: center;
   background: rgba(0, 0, 0, 0.5);
+`;
+
+const PageContainer = styled.div`
+  background: #F3F3F3;
+  padding: 0 20px;
+`;
+
+const PageContents = styled.div`
+  background: #FFF;
+  max-width: 800px;
+  margin: 10px;
+  margin: auto;
+  padding: 50px;
+  position: relative;
+`;
+
+const PageTitle = styled.h2`
+  padding-bottom: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  top: 55px;
+  right: 50px;
 `;
 
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";
@@ -117,23 +142,27 @@ export default function Home() {
 
   return (
     <>
-      <h2>Home Page</h2>
-      <div>
-        <p>
-          <button onClick={toggleFullscreen}>Remote</button>
-        </p>
-        <Upload />
-        {/* <TurretGridController moveTurret={moveTurret} /> */}
-        {fullscreen && (
-          <Fullscreen>
-            <CloseButton onClick={toggleFullscreen}>x</CloseButton>
-            <DebugTurretInfo>
-              Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
-            </DebugTurretInfo>
-            <TurretController updatePosition={updatePosition} fire={fire} />
-          </Fullscreen>
-        )}
-      </div>
+      <PageContainer>
+        <PageContents>
+          <PageTitle>Home Page</PageTitle>
+          <ButtonContainer>
+            <StyledOutlinedButton className="outlined" onClick={toggleFullscreen}>REMOTE</StyledOutlinedButton>
+          </ButtonContainer>
+          <div>
+            <Upload />
+            {/* <TurretGridController moveTurret={moveTurret} /> */}
+            {fullscreen && (
+              <Fullscreen>
+                <CloseButton onClick={toggleFullscreen}>x</CloseButton>
+                <DebugTurretInfo>
+                  Actual pitch:{turretState.pitch} yaw: {turretState.yaw}
+                </DebugTurretInfo>
+                <TurretController updatePosition={updatePosition} fire={fire} />
+              </Fullscreen>
+            )}
+          </div>
+        </PageContents>
+      </PageContainer>
     </>
   );
 }
