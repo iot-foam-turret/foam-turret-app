@@ -86,6 +86,7 @@ type iotTurretState = {
   pitch?: number;
   yaw?: number;
   mode?: "Firing";
+  control?: "FaceID" | "Manual"
 };
 
 function useIoT(): [iotTurretState, (desiredState: iotTurretState) => void] {
@@ -129,6 +130,11 @@ export default function Home() {
   const [turretState, setTurretState] = useIoT();
   const [fullscreen, setFullscreen] = useState(false);
   const toggleFullscreen = () => {
+    if (fullscreen) {
+      setTurretState({ control: "FaceID" })
+    } else {
+      setTurretState({ control: "Manual" })
+    }
     setFullscreen(!fullscreen);
   };
   // const moveTurret = ({ x, y }: { x: number; y: number }) => {
