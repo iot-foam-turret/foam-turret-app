@@ -4,6 +4,7 @@ import TurretController from "./TurretController";
 import styled from "styled-components";
 import Upload from "./Upload";
 import { StyledOutlinedButton } from "./Button";
+import * as Breakpoints from "../styles/breakpoints";
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -16,6 +17,7 @@ const Fullscreen = styled.div`
   background: white;
   height: 100vh;
   width: 100vw;
+  z-index: 1030;
 `;
 
 const CloseButton = styled.button`
@@ -45,7 +47,10 @@ const DebugTurretInfo = styled.div`
 
 const PageContainer = styled.div`
   background: #F3F3F3;
-  padding: 0 20px;
+  padding: 0 8px;
+  @media (min-width: ${Breakpoints.medium}px) {
+    padding: 0 20px;
+  }
 `;
 
 const PageContents = styled.div`
@@ -53,8 +58,12 @@ const PageContents = styled.div`
   max-width: 800px;
   margin: 10px;
   margin: auto;
-  padding: 50px;
+  padding: 8px;
   position: relative;
+  min-height: 100vh;
+  @media (min-width: ${Breakpoints.medium}px) {
+    padding: 50px;
+  }
 `;
 
 const PageTitle = styled.h2`
@@ -63,8 +72,12 @@ const PageTitle = styled.h2`
 
 const ButtonContainer = styled.div`
   position: absolute;
-  top: 55px;
-  right: 50px;
+  top: 15px;
+  right: 8px;
+  @media (min-width: ${Breakpoints.medium}px) {
+    top: 55px;
+    right: 50px;
+  }
 `;
 
 const piTurretUpdateTopic = "$aws/things/Pi-Turret/shadow/update";

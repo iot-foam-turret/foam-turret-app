@@ -21,5 +21,4 @@ const App: React.FC = () => {
     </div>
   );
 };
-// TODO: Remove "true" when logout is implemented
-export default withAuthenticator(App, true);
+export default withAuthenticator(App);
