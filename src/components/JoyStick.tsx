@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import nipplejs, { JoystickOutputData, JoystickManagerOptions } from "nipplejs";
+import React from "react";
+import { JoystickOutputData, JoystickManagerOptions } from "nipplejs";
+import ReactNipple from "react-nipple";
 
 const staticOptions: JoystickManagerOptions = {
   mode: "dynamic",
@@ -14,33 +15,22 @@ type JoyStickProps = {
 };
 
 const JoyStick: React.FC<JoyStickProps> = ({ onMove }) => {
-  const joyStick = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (!joyStick.current) return;
-    const manager = nipplejs.create({
-      ...staticOptions,
-      zone: joyStick.current
-    });
-    manager.on("move", (_event, data) => {
-      onMove(data);
-    });
-    manager.on("end", (_event, data) => {
-      onMove(data);
-    });
-    return () => {
-      manager.destroy();
-    };
-  }, [onMove]);
+  const callback = (_event: Event, data: JoystickOutputData) => {
+    onMove(data);
+  }
   return (
-    <div
-      ref={joyStick}
+    <ReactNipple
+      options={staticOptions}
       style={{
+        color: "cyan",
         width: "100%",
         height: "100%",
         position: "relative"
       }}
+      onEnd={callback}
+      onMove={callback}
     />
   );
 };
 
-export default React.memo(JoyStick);
+export default JoyStick;
