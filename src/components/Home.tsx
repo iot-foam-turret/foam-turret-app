@@ -3,8 +3,8 @@ import { PubSub } from "aws-amplify";
 import TurretController from "./TurretController";
 import styled from "styled-components";
 import Upload from "./Upload";
-import { StyledOutlinedButton } from "./Button";
 import * as Breakpoints from "../styles/breakpoints";
+import { Button } from "react-bootstrap";
 
 const Fullscreen = styled.div`
   position: fixed;
@@ -46,7 +46,6 @@ const DebugTurretInfo = styled.div`
 `;
 
 const PageContainer = styled.div`
-  background: #F3F3F3;
   padding: 0 8px;
   @media (min-width: ${Breakpoints.medium}px) {
     padding: 0 20px;
@@ -54,7 +53,6 @@ const PageContainer = styled.div`
 `;
 
 const PageContents = styled.div`
-  background: #FFF;
   max-width: 800px;
   margin: 10px;
   margin: auto;
@@ -71,12 +69,20 @@ const PageTitle = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 8px;
+  width: 100%;
+  margin-bottom: 16px;
   @media (min-width: ${Breakpoints.medium}px) {
+    position: absolute;
+    width: auto;
     top: 55px;
     right: 50px;
+  }
+`;
+
+const RemoteButton = styled(Button)`
+  width: 100%;
+  @media (min-width: ${Breakpoints.medium}px) {
+    width: 140px;
   }
 `;
 
@@ -163,9 +169,9 @@ export default function Home() {
     <>
       <PageContainer>
         <PageContents>
-          <PageTitle>Home Page</PageTitle>
+          <PageTitle>Control Center</PageTitle>
           <ButtonContainer>
-            <StyledOutlinedButton className="outlined" onClick={toggleFullscreen}>REMOTE</StyledOutlinedButton>
+            <RemoteButton variant="outline-primary" onClick={toggleFullscreen}>REMOTE</RemoteButton>
           </ButtonContainer>
           <div>
             <Upload />

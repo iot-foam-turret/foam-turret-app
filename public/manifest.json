@@ -1,6 +1,6 @@
 {
-  "short_name": "Foam Turret App",
-  "name": "Foam Turret App",
+  "short_name": "Builder Turret",
+  "name": "Builder Turret",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,15 +8,15 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "Icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "Icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
-    }	 
+    }
   ],
   "start_url": ".",
   "display": "standalone",

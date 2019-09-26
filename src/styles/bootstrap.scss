@@ -1,0 +1,18 @@
+// Variable overrides
+$body-bg: #000;
+$body-color: #FFF;
+
+$blue: rgb(27,255,242);
+
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+$navbar-light-color: rgba(#FFF, .5);
+$navbar-light-active-color: #FFF;
+$navbar-light-hover-color: rgba(#FFF, .7);
+$navbar-light-disabled-color: rgba(#FFF, .3);
+
+
+// Bootstrap and its default variables
+@import "../../node_modules/bootstrap/scss/bootstrap";
