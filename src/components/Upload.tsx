@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { S3Image } from "aws-amplify-react";
 import { StyledFilledButton } from "./Button";
+import AmplifyTheme from "../styles/amplify-theme";
 
 const imageTheme = (hideImage: Boolean) => ({
+  ...AmplifyTheme,
   photoImg: {
     width: "80vw",
     maxWidth: "400px",
@@ -13,6 +15,9 @@ const imageTheme = (hideImage: Boolean) => ({
   },
   photo: {
     textAlign: "center"
+  },
+  formContainer: {
+    margin: "0"
   }
 });
 

@@ -1,10 +1,11 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./styles/bootstrap.scss";
 import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { withAuthenticator } from "aws-amplify-react"; // or 'aws-amplify-react-native';
 import AppRoutes from "./components/AppRoutes";
 import { AWSIoTProvider } from "@aws-amplify/pubsub";
+import AmplifyTheme from "./styles/amplify-theme";
 
 Amplify.configure(awsconfig);
 
@@ -21,4 +22,7 @@ const App: React.FC = () => {
     </div>
   );
 };
-export default withAuthenticator(App);
+// export default App;
+export default withAuthenticator(App, {
+  theme: AmplifyTheme
+});
